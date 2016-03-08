@@ -16,8 +16,17 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Note extends Component {
+export default class Note extends Component {
   render(){
+    let note = this.props.note;
+    let { summary, title, id, date } = note;
 
+    return(
+      <View style={styles.container}>
+        <Text>{title}</Text>
+        <Text>{summary}</Text>
+        <Text>{date}</Text>
+      </View>
+    );
   }
 }

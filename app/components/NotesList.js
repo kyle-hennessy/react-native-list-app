@@ -8,6 +8,10 @@ import React, {
   ListView,
   TouchableHighlight
 } from 'react-native';
+import moment from 'moment';
+
+import AddNote from './AddNote';
+import Note from './Note';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,13 +21,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF'
   },
   rowStyle: {
-    height: 60,
+    flex: 1,
     backgroundColor: '#efefef',
     borderBottomColor: '#DDD',
     borderBottomWidth: 1,
-    flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   welcome: {
     fontSize: 20,
@@ -46,23 +49,32 @@ const styles = StyleSheet.create({
     fontSize: 10
   },
   rightText: {
-    alignItems: 'right'
+    // textAlign: 'right'
   }
 });
 
 export default class NotesList extends Component {
   constructor(props){
     super(props);
+    this.rowPressed = this.rowPressed.bind(this);
+    this.renderRow = this.renderRow.bind(this);
     this.state = { dataSource: new ListView.DataSource({ rowHasChanged: (row1, row2) => row1 !== row2 }).cloneWithRows(this.props.MOCK_STATE.notes) };
+  }
+  rowPressed(note){
+    this.props.navigator.push({
+      title: note.title,
+      component: Note,
+      passProps: { note }
+    });
   }
   renderRow(rowData){
     return(
-      <TouchableHighlight underlayColor="#ededed" style={styles.rowStyle}>
+      <TouchableHighlight onPress={() => this.rowPressed(rowData)} underlayColor="#ededed" style={styles.rowStyle}>
         <View>
           <Text style={styles.rowTitle}>{rowData.title}</Text>
           <Text>{rowData.summary}</Text>
-          <View style={style.rightText}>
-            <Text style={styles.rowTags}>Tags: {rowData.tags.join(', ')}</Text>
+          <View style={styles.rightText}>
+            <Text style={styles.rowTags}>Date: {moment(rowData.date).format("MMMM Do, YYYY")}</Text>
           </View>
         </View>
       </TouchableHighlight>
@@ -72,14 +84,7 @@ export default class NotesList extends Component {
     return (
       <View style={styles.container}>
         <ListView dataSource={ this.state.dataSource } renderRow={ this.renderRow }/>
-        <Text style={styles.welcome}>
-          Notes List
-        </Text>
-        <Text>
-          {Object.keys(this.props).join(', ')}
-        </Text>
-        <Text>
-        </Text>
+        <AddNote {...this.props} />
       </View>
     );
   }
