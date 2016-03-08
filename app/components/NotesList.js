@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
 export default class NotesList extends Component {
   constructor(props){
     super(props);
+    console.log(this.props);
     this.rowPressed = this.rowPressed.bind(this);
     this.renderRow = this.renderRow.bind(this);
     this.state = { dataSource: new ListView.DataSource({ rowHasChanged: (row1, row2) => row1 !== row2 }).cloneWithRows(this.props.MOCK_STATE.notes) };

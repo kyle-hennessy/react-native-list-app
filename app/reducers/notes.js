@@ -1,26 +1,13 @@
-const note = (state, action) => {
-  switch(action.type){
-    case 'NEW_NOTE':
-      return {
-        id: action.id,
-        text: action.text,
-        date: action.date
-      }
-    default:
-      return state;
-  }
-};
 const notes = (state = [], action) => {
+  let note = action.note;
   switch(action.type){
     case 'REMOVE_NOTE':
-      let newState = state.filter(n => n.id !== action.id);
-      return newState;
+      return state.filter(n => n.id !== action.id);
     case 'UPDATE_NOTE':
-      let note = action.note;
       let newState = state.filter(n => n.id !== note.id);
       return [ ...newState, note ];
     case 'NEW_NOTE':
-      return [ ...state, note(undefined, action) ];
+      return [ ...state, { note } ];
     default:
       return state;
   }
