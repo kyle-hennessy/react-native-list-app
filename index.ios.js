@@ -21,6 +21,7 @@ import NotesList from './app/components/NotesList';
 
 class NativeNotes extends Component {
   render() {
+    console.log(store.getState());
     return (
       <Provider store={store}>
         <NavigatorIOS style={styles.wrapper}

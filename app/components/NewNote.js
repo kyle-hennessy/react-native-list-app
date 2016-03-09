@@ -5,9 +5,12 @@ import React, {
   StyleSheet,
   Text,
   View,
-  TextInput
+  TextInput,
+  TouchableHighlight
 } from 'react-native';
 import moment from 'moment';
+import { connect } from 'react-redux';
+import { newNote } from '../actions/actions';
 
 
 const styles = StyleSheet.create({
@@ -31,6 +34,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     margin: 15,
     marginTop: 25,
+  },
+  submit: {
+    flex: 0.25,
+    alignItems: 'stretch',
+    flexDirection: 'row',
+    backgroundColor: 'blue',
   }
 })
 const currentDate = () => {
@@ -38,10 +47,14 @@ const currentDate = () => {
   return moment(d).format("MMMM Do, YYYY");
 };
 
-export default class NewNote extends Component {
+class NewNote extends Component {
   constructor(props){
     super(props);
-    this.state = { title: 'Untitled', text: '', date: currentDate()};
+    console.log(this.props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  handleSubmit(){
+    this.props.dispatch(newNote({id: 6, title: 'TEST super test', summary: 'sample testztxt'}));
   }
   render(){
     return(
@@ -51,19 +64,19 @@ export default class NewNote extends Component {
           placeholder='Title'
           autoFocus={true}
           style={ styles.input }
-          onChangeText={(text) => this.setState({title})}
-          value={this.state.title}
         />
         <Text>Note</Text>
         <TextInput
           multiline={true}
           placeholder='Note'
           style={ styles.textInput }
-          onChangeText={(text) => this.setState({text})}
-          value={this.state.text}
         />
-        <Text>created: {this.state.date} </Text>
+        <Text>created: {currentDate()} </Text>
+        <TouchableHighlight style={styles.submit} onPress={this.handleSubmit}>
+          <Text>Add</Text>
+        </TouchableHighlight>
       </View>
     );
   }
 }
+export default connect()(NewNote);

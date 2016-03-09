@@ -29,7 +29,8 @@ export default class AddNote extends Component {
   handleAddNew(){
     this.props.navigator.push({
       title: 'New Note',
-      component: NewNote
+      component: NewNote,
+      ...this.props
     });
   }
   render(){

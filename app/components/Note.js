@@ -9,10 +9,13 @@ import React, {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 100,
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-start',
     backgroundColor: '#F5FCFF',
+  },
+  title: {
+    fontWeight: 'bold'
   }
 });
 
@@ -23,7 +26,7 @@ export default class Note extends Component {
 
     return(
       <View style={styles.container}>
-        <Text>{title}</Text>
+        <Text style={styles.title}>{title}</Text>
         <Text>{summary}</Text>
         <Text>{date}</Text>
       </View>
