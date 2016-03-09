@@ -12,7 +12,7 @@ It includes redux for data management.  Simple notes CRUD app.
 
 ###To run
 
-Requires node v5.0+
+Requires Node v5.0+
 
 `npm install`
 `npm start`
